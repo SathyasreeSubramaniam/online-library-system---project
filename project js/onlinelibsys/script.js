@@ -138,11 +138,28 @@ function addStudent() {
 function displayStudents() {
     const table = document.getElementById("studentTable");
     table.innerHTML = "";
-    students.forEach(s => {
+
+    students.forEach((s, index) => {
         const row = document.createElement("tr");
-        row.innerHTML = `<td>${s.name}</td><td>${s.id}</td>`;
+
+        row.innerHTML = `
+            <td>${s.name}</td>
+            <td>${s.id}</td>
+            <td><button class="delete-btn" onclick="deleteStudent(${index})">Delete</button></td>
+        `;
+
         table.appendChild(row);
     });
+}
+function deleteStudent(index) {
+    // Remove from array
+    students.splice(index, 1);
+
+    // Update localStorage
+    localStorage.setItem("students", JSON.stringify(students));
+
+    // Refresh table
+    displayStudents();
 }
 
 // Issue book
@@ -197,3 +214,4 @@ function displayIssuedBooks() {
         table.appendChild(row);
     });
 }
+
